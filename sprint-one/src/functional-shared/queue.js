@@ -5,6 +5,8 @@ var Queue = function(){
   var someInstance = {
 		storage: {},
 		storageLength: 0,
+		first: 0,
+		last: 0
 	};
 
 	someInstance = _.extend(someInstance, queueMethods);
@@ -14,30 +16,38 @@ var Queue = function(){
 var queueMethods = {
 
 	enqueue: function(value){
-	    length = Object.keys(storage).length;
-	    storage[length] = value;
+	    this.storage[this.last] = value;
+		this.last++;
+		this.storageLength++;
   	},
 
   	dequeue: function(){
-	    length = Object.keys(storage).length;
-	    var popped = storage[0];
-	    delete storage[0];
+
+
+	  	var popped = this.storage[this.first];
+	    delete this.storage[this.first];
+	    this.first++;
+	   
+	    if(this.storageLength > 0) {
+	    	this.storageLength--;
+	    }
+
+	   //  var arrVals = [];
+	   //  for(var key in this.storage){
+	   //    arrVals.push(this.storage[key]);
+	   //  }
+	    
+	   //  this.storage = {};
+	    
+	   //  _.each(arrVals, function(elem, i){
+	   //    this.storage[i] = elem;
+	   //  });
+
 	    return popped;
-	    var arrKeys = [];
-	    var arrVals = [];
-	    for(var key in storage){
-	      arrKeys.push(key);
-	      arrVals.push(storage[key]);
-	    }
-	    for(var i = 0; i < arrKeys.length; i++){
-	      arrKeys[i] = i;
-	      storage[i] = arrVals[i];
-	    }
  	},
 
 	size: function(){
-	    length = Object.keys(storage).length;
-	    return length;
+	    return this.storageLength;
   	}
 
 };

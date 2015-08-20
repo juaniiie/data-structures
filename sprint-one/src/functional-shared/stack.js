@@ -8,6 +8,7 @@ var Stack = function() {
 
 	someInstance = _.extend(someInstance, stackMethods);
 	return someInstance;
+
 };
 
 var stackMethods = {
