@@ -6,8 +6,6 @@
 var Graph = function() {
 
 	this.arrOfNodes = [];
-	// this.arrOfNodes.value = node;
-	// this.arrOfNodes.edges = [];
 };
 
 // ------------------------
@@ -48,15 +46,14 @@ Graph.prototype.removeNode = function(node){
 Graph.prototype.hasEdge = function(fromNode, toNode){
 	var from;
 	var to;
-	for(var i = 0; this.arrOfNodes.length; i++){
-		if(this.arrOfNodes[i].contains(fromNode)){
+	for(var i = 0; i < this.arrOfNodes.length; i++){
+		if(this.arrOfNodes[i].value === fromNode){
 			from = this.arrOfNodes[i];
 		}
-		if(this.arrOfNodes[i].contains(toNode)){
+		if(this.arrOfNodes[i].value === toNode){
 			to = this.arrOfNodes[i];
 		}
 	}
-
 	if(from.edges.indexOf(to) > -1 && to.edges.indexOf(from) > -1) {
 		return true;
 	} 
@@ -68,36 +65,52 @@ Graph.prototype.hasEdge = function(fromNode, toNode){
 Graph.prototype.addEdge = function(fromNode, toNode){
 	var from;
 	var to;
-	for(var i = 0; this.arrOfNodes.length; i++){
-		if(this.arrOfNodes[i].contains(fromNode)){
+	for(var i = 0; i < this.arrOfNodes.length; i++){
+		if(this.arrOfNodes[i].value === fromNode){
 			from = this.arrOfNodes[i];
 		}
-		if(this.arrOfNodes[i].contains(toNode)){
+		
+		if(this.arrOfNodes[i].value === toNode){
 			to = this.arrOfNodes[i];
 		}
+		
 	}
 	from.edges.push(to);
-	to.edges.push(from);
+	to.edges.push(from);	
 };
 
 // ------------------------
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode){
+	var from;
+	var to;
+	for(var i = 0; i < this.arrOfNodes.length; i++){
+		if(this.arrOfNodes[i].value === fromNode){
+			from = this.arrOfNodes[i];
+		}
+		
+		if(this.arrOfNodes[i].value === toNode){
+			to = this.arrOfNodes[i];
+		}
+	}
+	from.edges.splice(from.edges.indexOf(to), 1);
+	to.edges.splice(to.edges.indexOf(from), 1);
 };
 
 // ------------------------
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb){
+	_.each(this.arrOfNodes, function(node){
+		var valueNode = node.value;
+		cb(valueNode);
+	});
+
 };
 
 /*
  * Complexity: What is the time complexity of the above functions?
  */
 
- var node = new Graph("cat");
- console.log(node);
- node.addNode('kitten'); 
- console.log(node);
 
 
 
