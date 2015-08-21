@@ -23,16 +23,19 @@ treeMethods.addChild = function(value){
  
 };
 
-treeMethods.contains = function(target){
-	if(this.value === target.value) {
+treeMethods.contains = function(target, node) {
+	node = node || this;
+	if(node.value === target) {
 		return true;
-	} else {
-		return false;
 	}
-	for (var i = 0; i < this.children.length; i++){
-		treeMethods.contains(children[i]);
+	if (node.children && node.children.length > 0){
+		for (var i = 0; i < node.children.length; i++) {
+			if(this.contains(target, node.children[i])){
+				return true;
+			}
+		}
 	}
-
+	return false;
 };
 
 
